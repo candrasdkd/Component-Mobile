@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -12,7 +12,8 @@ import styles from './Style';
 function CustomCheckbox(props) {
   const [checked, setChecked] = useState(false);
   const [select, setSelect] = useState(null);
-  const [data, setData] = useState([
+  const [multipleChecked, setMultipleChecked] = useState(true);
+  const [dataMultipleCheckbox, setDataMultipleCheckbox] = useState([
     {
       id: 1,
       name: 'Follower 1',
@@ -35,7 +36,7 @@ function CustomCheckbox(props) {
     },
   ]);
 
-  const dataCheckbox1 = [
+  const dataSingleCheckbox = [
     {id: 1, social: 'Instagram'},
     {id: 2, social: 'Facebook'},
     {id: 3, social: 'Whatsapp'},
@@ -60,7 +61,7 @@ function CustomCheckbox(props) {
   };
 
   const selectAction = e => {
-    const newData = data.map(item => {
+    const newData = dataMultipleCheckbox.map(item => {
       if (item.id === e.id) {
         return {
           ...item,
@@ -72,22 +73,35 @@ function CustomCheckbox(props) {
         selected: item.selected,
       };
     });
-    setData(newData);
+    setDataMultipleCheckbox(newData);
+  };
+
+  const resetButton = () => {
+    let newData = dataMultipleCheckbox;
+    for (let i = 0; i < newData.length; i++) {
+      newData[i].selected = false;
+    }
+    setDataMultipleCheckbox(newData);
+    setMultipleChecked(false);
+    setSelect(null);
+    setChecked(false);
   };
 
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View style={{backgroundColor: props.route.params?.color, flex: 1}}>
       <StatusBar
         backgroundColor={props.route.params?.color}
         barStyle="light-content"
       />
-      <TouchableOpacity>
-        <Text style={styles.title}>RESET</Text>
+      <TouchableOpacity
+        style={styles.resetButton}
+        onPress={() => resetButton()}>
+        <Text style={styles.titleReset}>RESET</Text>
       </TouchableOpacity>
       <ScrollView style={styles.scrollContainer}>
         <Text style={styles.title}>Single Checkbox & Unselect</Text>
         <View style={styles.box}>
-          {dataCheckbox1?.map(item => (
+          {dataSingleCheckbox?.map(item => (
             <TouchableOpacity
               key={item?.id}
               onPress={() => handleCheckBox(item)}
@@ -99,38 +113,58 @@ function CustomCheckbox(props) {
                     : 'radio-button-off'
                 }
                 color={
-                  checked === true && select?.id === item?.id
-                    ? props.route.params?.color
-                    : 'gray'
+                  checked === true && select?.id === item?.id ? 'gold' : 'white'
                 }
                 size={20}
                 style={{marginRight: 7}}
               />
-              <Text style={styles.textBody}>{item?.social}</Text>
+              <Text
+                style={[
+                  styles.textBody,
+                  {
+                    color:
+                      checked === true && select?.id === item?.id
+                        ? 'gold'
+                        : 'white',
+                  },
+                ]}>
+                {item?.social}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>
 
         <Text style={styles.title}>Multiple Checkbox & Unselect</Text>
         <View style={styles.box}>
-          {data?.map((item, index) => (
-            <TouchableOpacity
-              key={item?.id}
-              onPress={() => selectAction(item)}
-              style={styles.button}>
-              <IonIcon
-                name={
-                  data[index]?.selected ? 'radio-button-on' : 'radio-button-off'
-                }
-                color={
-                  data[index]?.selected ? props.route.params?.color : 'gray'
-                }
-                size={20}
-                style={{marginRight: 7}}
-              />
-              <Text style={styles.textBody}>{item?.name}</Text>
-            </TouchableOpacity>
-          ))}
+          {dataMultipleCheckbox?.map((item, index) => {
+            let flag = dataMultipleCheckbox[index]?.selected;
+            if (multipleChecked === false) {
+              flag = false;
+            }
+
+            return (
+              <TouchableOpacity
+                key={item?.id}
+                onPress={() => selectAction(item)}
+                style={styles.button}>
+                <IonIcon
+                  name={flag === true ? 'radio-button-on' : 'radio-button-off'}
+                  color={flag === true ? 'gold' : 'white'}
+                  size={20}
+                  style={{marginRight: 7}}
+                />
+                <Text
+                  style={[
+                    styles.textBody,
+                    {
+                      color: flag === true ? 'gold' : 'white',
+                    },
+                  ]}>
+                  {item?.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
         </View>
       </ScrollView>
     </View>

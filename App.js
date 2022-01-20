@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import HomeTab from './src/screens/Navigation/BottomTab';
 import SplashScreen from './src/screens/SplashScreen/Component';
+import CustomCheckbox from './src/screens/CustomCheckbox/Component';
 
 const App = () => {
   const {Navigator: StackNav, Screen: StackScreen} = createStackNavigator();
@@ -13,6 +14,11 @@ const App = () => {
         <StackScreen
           name="HomeTab"
           component={HomeTab}
+          options={{headerShown: false}}
+        />
+        <StackScreen
+          name="CustomCheckbox"
+          component={CustomCheckbox}
           options={{headerShown: false}}
         />
         <StackScreen

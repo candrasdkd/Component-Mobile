@@ -1,6 +1,5 @@
 import React from 'react';
 import HomeScreen from '../Home/Component';
-import CustomCheckbox from '../CustomCheckbox/Component';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -31,13 +30,6 @@ const HomeTab = props => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Custom',
-        }}
-      />
-      <Tab.Screen
-        name="CustomCheckbox"
-        component={CustomCheckbox}
-        options={{
-          tabBarLabel: 'Function',
         }}
       />
     </Tab.Navigator>
