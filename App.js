@@ -5,7 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import HomeTab from './src/screens/Navigation/BottomTab';
 import SplashScreen from './src/screens/SplashScreen/Component';
 import CustomCheckbox from './src/screens/CustomCheckbox/Component';
-
+import CustomTextInput from './src/screens/CustomTextInput/Component';
 const App = () => {
   const {Navigator: StackNav, Screen: StackScreen} = createStackNavigator();
   return (
@@ -19,6 +19,11 @@ const App = () => {
         <StackScreen
           name="CustomCheckbox"
           component={CustomCheckbox}
+          options={{headerShown: false}}
+        />
+        <StackScreen
+          name="CustomTextInput"
+          component={CustomTextInput}
           options={{headerShown: false}}
         />
         <StackScreen
