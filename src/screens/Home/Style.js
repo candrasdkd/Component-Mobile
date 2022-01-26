@@ -1,5 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
-const d = Dimensions.get('window');
+const CARD_WIDTH = Dimensions.get('window').width * 0.8;
+const CARD_HEIGHT = Dimensions.get('window').height * 0.7;
 
 export default StyleSheet.create({
   container: {
@@ -31,5 +32,13 @@ export default StyleSheet.create({
     lineHeight: 25,
     marginHorizontal: 23,
   },
-  cubeButton: {position: 'absolute', right: -8.5, height: 95},
+  cardStyle: {
+    width: CARD_WIDTH,
+    height: CARD_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3A72E8',
+    margin: 5,
+    borderRadius: 15,
+  },
 });

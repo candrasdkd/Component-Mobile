@@ -2,6 +2,11 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   scrollContainer: {paddingHorizontal: 20},
+  backButton: {
+    position: 'absolute',
+    left: 10,
+    top: 15,
+  },
   resetButton: {
     backgroundColor: 'white',
     alignSelf: 'flex-end',

@@ -5,11 +5,11 @@ function TextInputNormal(props) {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.textInput}
+        style={props.customStyle ? props.customStyle : styles.textInput}
         value={props.value}
         onChangeText={props.onChangeText}
         placeholder={props.placeholder}
-        placeholderTextColor="#C0C0C0"
+        placeholderTextColor="#393939"
         {...props}
       />
     </View>
@@ -20,13 +20,14 @@ export default TextInputNormal;
 
 const styles = StyleSheet.create({
   container: {
-    width: 400,
-    backgroundColor: '#F0F0F0',
-    borderRadius: 10,
     marginVertical: 5,
   },
   textInput: {
+    width: 350,
+    backgroundColor: '#c0c0c0',
+    color: '#000',
     paddingHorizontal: 10,
     fontSize: 16,
+    borderRadius: 10,
   },
 });

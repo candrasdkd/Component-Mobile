@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   TouchableOpacity,
   View,
   ScrollView,
   StatusBar,
+  Linking,
 } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
 import styles from './Style';
+import {Icons} from '../../camponents/Icons/Icons';
 
 function CustomCheckbox(props) {
   const [checked, setChecked] = useState(false);
@@ -42,7 +43,7 @@ function CustomCheckbox(props) {
     {id: 3, social: 'Whatsapp'},
   ];
 
-  // unselet checkbox
+  // UNSELECT SINGLE
   const handleCheckBox = item => {
     setSelect(item);
     if (select?.id === item?.id && checked === false) {
@@ -60,6 +61,7 @@ function CustomCheckbox(props) {
     }
   };
 
+  // UNSELECT MULTIPLE CHECKBOX
   const selectAction = e => {
     const newData = dataMultipleCheckbox.map(item => {
       if (item.id === e.id) {
@@ -73,9 +75,11 @@ function CustomCheckbox(props) {
         selected: item.selected,
       };
     });
+    setMultipleChecked(true);
     setDataMultipleCheckbox(newData);
   };
 
+  // RESET BUTTON
   const resetButton = () => {
     let newData = dataMultipleCheckbox;
     for (let i = 0; i < newData.length; i++) {
@@ -94,11 +98,21 @@ function CustomCheckbox(props) {
         barStyle="light-content"
       />
       <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => props.navigation.goBack()}>
+        <Icons.Ionicons
+          name="md-arrow-back-circle-sharp"
+          color={'white'}
+          size={40}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
         style={styles.resetButton}
         onPress={() => resetButton()}>
         <Text style={styles.titleReset}>RESET</Text>
       </TouchableOpacity>
       <ScrollView style={styles.scrollContainer}>
+        {/* SINGLE SECTION */}
         <Text style={styles.title}>Single Checkbox & Unselect</Text>
         <View style={styles.box}>
           {dataSingleCheckbox?.map(item => (
@@ -106,7 +120,7 @@ function CustomCheckbox(props) {
               key={item?.id}
               onPress={() => handleCheckBox(item)}
               style={styles.button}>
-              <IonIcon
+              <Icons.Ionicons
                 name={
                   checked === true && select?.id === item?.id
                     ? 'radio-button-on'
@@ -134,6 +148,7 @@ function CustomCheckbox(props) {
           ))}
         </View>
 
+        {/* MULTIPLE SECTION */}
         <Text style={styles.title}>Multiple Checkbox & Unselect</Text>
         <View style={styles.box}>
           {dataMultipleCheckbox?.map((item, index) => {
@@ -147,7 +162,7 @@ function CustomCheckbox(props) {
                 key={item?.id}
                 onPress={() => selectAction(item)}
                 style={styles.button}>
-                <IonIcon
+                <Icons.Ionicons
                   name={flag === true ? 'radio-button-on' : 'radio-button-off'}
                   color={flag === true ? 'gold' : 'white'}
                   size={20}
